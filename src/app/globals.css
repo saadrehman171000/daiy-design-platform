@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.gg{
+  @media (max-width: 768px) {
+    width: 92px !important;
+    height: 92px !important;
+  }
+
+}
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  font-family: "Arial Rounded MT Bold", "Arial Rounded MT", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+* {
+  font-family: "Arial Rounded MT Bold", "Arial Rounded MT", Arial, sans-serif;
+}
