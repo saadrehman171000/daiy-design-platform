@@ -123,10 +123,28 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, just log the email. Later we can integrate with a service like EmailJS or a form service
-    console.log('Email submitted:', email);
-    alert('Thank you for your interest! We will notify you when we launch.');
-    setEmail('');
+    
+    try {
+      // You can implement a client-side solution here
+      // For example, using a third-party service like EmailJS or a form service
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to subscribe');
+      }
+
+      alert('Thank you for subscribing!');
+      setEmail('');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to subscribe. Please try again later.');
+    }
   };
 
   return (
