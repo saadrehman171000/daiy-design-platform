@@ -92,10 +92,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Set target date to 60 days from now
-    const now = new Date();
-    const targetDate = new Date(now);
-    targetDate.setDate(now.getDate() + 60); // 60 days from now
+    // Set a fixed launch date - March 11th, 2024 at midnight UTC
+    const targetDate = new Date('2024-03-11T00:00:00Z');
     
     const calculateTimeLeft = () => {
       const currentTime = new Date().getTime();
