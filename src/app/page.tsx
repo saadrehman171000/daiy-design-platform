@@ -92,19 +92,23 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Set a fixed launch date - March 11th, 2024 at 12:00 PM UTC
-    const targetDate = new Date('2024-03-11T12:00:00+00:00');
+    // Set target date to March 11th, 2024 at 12:00 PM Pakistan Time (07:00 UTC)
+    const targetDate = new Date(Date.UTC(2024, 2, 11, 7, 0, 0)); // 12:00 PM PKT = 07:00 UTC
     
     const calculateTimeLeft = () => {
       const currentTime = new Date();
+      
+      // Debug logging
+      console.log('Target date (UTC):', targetDate.toUTCString());
+      console.log('Target date (PKT):', targetDate.toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
+      console.log('Current time (UTC):', currentTime.toUTCString());
+      console.log('Current time (PKT):', currentTime.toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
+      
       const distance = targetDate.getTime() - currentTime.getTime();
-
-      // Add debug logging
-      console.log('Target date:', targetDate);
-      console.log('Current time:', currentTime);
-      console.log('Distance:', distance);
+      console.log('Time difference (days):', distance / (1000 * 60 * 60 * 24));
 
       if (distance < 0) {
+        console.log('Distance is negative, returning zeros');
         return {
           days: '00',
           hours: '00',
