@@ -92,12 +92,17 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Set a fixed launch date - March 11th, 2024 at midnight UTC
-    const targetDate = new Date('2024-03-11T00:00:00Z');
+    // Set a fixed launch date - March 11th, 2024 at 12:00 PM UTC
+    const targetDate = new Date('2024-03-11T12:00:00+00:00');
     
     const calculateTimeLeft = () => {
-      const currentTime = new Date().getTime();
-      const distance = targetDate.getTime() - currentTime;
+      const currentTime = new Date();
+      const distance = targetDate.getTime() - currentTime.getTime();
+
+      // Add debug logging
+      console.log('Target date:', targetDate);
+      console.log('Current time:', currentTime);
+      console.log('Distance:', distance);
 
       if (distance < 0) {
         return {
@@ -114,7 +119,7 @@ export default function Home() {
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       return {
-        days: Math.max(0, days).toString().padStart(2, '0'),
+        days: days.toString().padStart(2, '0'),
         hours: hours.toString().padStart(2, '0'),
         minutes: minutes.toString().padStart(2, '0'),
         seconds: seconds.toString().padStart(2, '0')
