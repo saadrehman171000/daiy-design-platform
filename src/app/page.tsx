@@ -92,9 +92,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const targetDate = new Date();
-    targetDate.setTime(targetDate.getTime() + (1.5 * 24 * 60 * 60 * 1000));
-
+    const targetDate = new Date('2024-02-01T00:00:00');
+    
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate.getTime() - now;
