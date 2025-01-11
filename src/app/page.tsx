@@ -10,8 +10,8 @@ export default function Home() {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
-    days: '01',
-    hours: '12',
+    days: '00',
+    hours: '00',
     minutes: '00',
     seconds: '00'
   });
@@ -92,8 +92,23 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const targetDate = new Date('2024-02-01T00:00:00');
+    const targetDate = new Date('2024-03-01T00:00:00');
     
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    setTimeLeft({
+      days: days.toString().padStart(2, '0'),
+      hours: hours.toString().padStart(2, '0'),
+      minutes: minutes.toString().padStart(2, '0'),
+      seconds: seconds.toString().padStart(2, '0')
+    });
+
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate.getTime() - now;
