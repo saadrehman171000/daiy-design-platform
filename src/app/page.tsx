@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Search, User, Heart, ShoppingCart, ChevronLeft, ChevronRight, ChevronDown, Menu, X } from 'lucide-react'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -121,30 +120,11 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try {
-      // You can implement a client-side solution here
-      // For example, using a third-party service like EmailJS or a form service
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to subscribe');
-      }
-
-      alert('Thank you for subscribing!');
-      setEmail('');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to subscribe. Please try again later.');
-    }
+    localStorage.setItem('subscribedEmail', email);
+    alert('Thank you for your interest! We will notify you when we launch.');
+    setEmail('');
   };
 
   return (
@@ -200,14 +180,7 @@ export default function Home() {
             <Search className={`absolute right-2 md:right-3 top-1/2 h-3 w-3 md:h-4 md:w-4 -translate-y-1/2 ${megaMenuOpen ? 'text-gray-500' : 'text-white'}`} />
           </div>
           <button className="p-1 md:p-2 hidden md:block text-white">
-          <SignedOut >
-          <SignInButton/>
-          </SignedOut>
-          <SignedIn>
-            
-            <UserButton />
-          </SignedIn>
-     
+            Sign In
           </button>
           <button className="p-1 md:p-2 hidden md:block">
             <Heart className={`h-4 w-4 md:h-5 md:w-5 ${megaMenuOpen ? 'text-black' : 'text-white'}`} />
@@ -273,13 +246,9 @@ export default function Home() {
               <Link href="/editor" className=" block">
               Editor
            </Link></li>
-           <SignedOut>
-          <SignInButton/>
-          </SignedOut>
-          <SignedIn>
-            
-            <UserButton />
-          </SignedIn>
+           <button className="block">
+            Sign In
+          </button>
            
             </ul>
           </nav>

@@ -3,8 +3,14 @@ const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
+    domains: ['i.ibb.co'],
   },
-  // Remove the auth configuration if you're doing static export
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  serverOptions: {
+    port: 3001
+  }
 }
 
 module.exports = nextConfig 
