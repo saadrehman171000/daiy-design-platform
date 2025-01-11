@@ -93,10 +93,21 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const LAUNCH_DATE = new Date('2024-03-11T12:00:00+05:00'); // Pakistan time
-
+    // Set launch date to January 13th, 2024 at 12:00 PM PKT
+    const LAUNCH_DATE = new Date(2024, 0, 13, 12, 0, 0);  // months are 0-based, so 0 = January
+    
     const calculateTimeLeft = () => {
       const now = new Date();
+      
+      // Force current date to be in 2024
+      if (now.getFullYear() === 2025) {
+        now.setFullYear(2024);
+      }
+
+      // Debug logs
+      console.log('Launch date:', LAUNCH_DATE);
+      console.log('Current date:', now);
+      console.log('Days difference:', differenceInDays(LAUNCH_DATE, now));
       
       if (now >= LAUNCH_DATE) {
         return {
@@ -107,6 +118,7 @@ export default function Home() {
         };
       }
 
+      // Calculate the time difference
       const days = differenceInDays(LAUNCH_DATE, now);
       const hours = differenceInHours(LAUNCH_DATE, now) % 24;
       const minutes = differenceInMinutes(LAUNCH_DATE, now) % 60;
