@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Search, User, Heart, ShoppingCart, ChevronLeft, ChevronRight, ChevronDown, Menu, X } from 'lucide-react'
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns'
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -92,23 +93,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Set target date to March 11th, 2024 at 12:00 PM Pakistan Time (07:00 UTC)
-    const targetDate = new Date(Date.UTC(2024, 2, 11, 7, 0, 0)); // 12:00 PM PKT = 07:00 UTC
-    
-    const calculateTimeLeft = () => {
-      const currentTime = new Date();
-      
-      // Debug logging
-      console.log('Target date (UTC):', targetDate.toUTCString());
-      console.log('Target date (PKT):', targetDate.toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
-      console.log('Current time (UTC):', currentTime.toUTCString());
-      console.log('Current time (PKT):', currentTime.toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
-      
-      const distance = targetDate.getTime() - currentTime.getTime();
-      console.log('Time difference (days):', distance / (1000 * 60 * 60 * 24));
+    const LAUNCH_DATE = new Date('2024-03-11T12:00:00+05:00'); // Pakistan time
 
-      if (distance < 0) {
-        console.log('Distance is negative, returning zeros');
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      
+      if (now >= LAUNCH_DATE) {
         return {
           days: '00',
           hours: '00',
@@ -117,20 +107,20 @@ export default function Home() {
         };
       }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const days = differenceInDays(LAUNCH_DATE, now);
+      const hours = differenceInHours(LAUNCH_DATE, now) % 24;
+      const minutes = differenceInMinutes(LAUNCH_DATE, now) % 60;
+      const seconds = differenceInSeconds(LAUNCH_DATE, now) % 60;
 
       return {
-        days: days.toString().padStart(2, '0'),
-        hours: hours.toString().padStart(2, '0'),
-        minutes: minutes.toString().padStart(2, '0'),
-        seconds: seconds.toString().padStart(2, '0')
+        days: String(days).padStart(2, '0'),
+        hours: String(hours).padStart(2, '0'),
+        minutes: String(minutes).padStart(2, '0'),
+        seconds: String(seconds).padStart(2, '0')
       };
     };
 
-    // Set initial time
+    // Initial calculation
     setTimeLeft(calculateTimeLeft());
 
     // Update every second
